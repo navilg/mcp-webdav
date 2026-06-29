@@ -104,6 +104,44 @@ Or for Docker:
 }
 ```
 
+## Test script
+
+A test script is included to validate all 7 WebDAV tool functions against a live WebDAV server.
+
+### Setup
+
+1. Create your test env file:
+
+```bash
+cp test.env.example test.env
+```
+
+2. Fill in WebDAV credentials and test inputs in `test.env`:
+
+```env
+WEBDAV_URL=https://your-webdav-server.com/remote.php/dav/files/username
+WEBDAV_USERNAME=your_webdav_username
+WEBDAV_PASSWORD=your_webdav_password
+```
+
+### Run tests
+
+The test script runs all tools in CRUD order:
+
+```bash
+python test_server.py
+```
+
+It automatically loads `test.env` and runs these tests sequentially:
+
+1. **`test_list_files`** — Lists files/directories at the root path
+2. **`test_create_directory`** — Creates a test directory
+3. **`test_upload_file`** — Uploads a file into the test directory
+4. **`test_read_file`** — Reads and verifies the uploaded file content
+5. **`test_update_file`** — Overwrites the file and verifies the new content
+6. **`test_delete_file`** — Deletes the file and verifies it's gone
+7. **`test_delete_directory`** — Deletes the directory
+
 ## Notes
 
 - Default server bind is `0.0.0.0:8000`.
